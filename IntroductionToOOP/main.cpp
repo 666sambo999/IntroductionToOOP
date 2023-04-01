@@ -3,8 +3,7 @@
 using namespace std;
 using std::cout; 
  
-
-//#define DISTANCE_CHECK
+# define delimiter "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n" 
 
 class Point // создаем структуру или класс новый 
 {
@@ -45,14 +44,25 @@ public:
 		this->y = y;
 		cout << "Constructor:\t" << this << endl; 
 	}
-
+	Point(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyConstructor:" << this << endl; 
+	}
 	~Point()
 	{
 		cout << "Destructor:\t" << this << endl; 
 	}
-
+	//				Operator:
+	void operator = (const Point& other)
+	{
+		this->x = x;
+		this->y = y;
+		cout << "CopyAssigment\t" << this << endl; 
+	}
 	// Метод (Methods)
-	double distance(Point other)
+	double distance(const Point& other)
 	{
 		// this - это точка от которой мы считаем расстояние
 		// other - это вторая точка, (указанная точка)
@@ -68,7 +78,7 @@ public:
 };
 
 
-double distance(Point A, Point B)
+double distance(const Point& A, const Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -77,6 +87,9 @@ double distance(Point A, Point B)
 }
 
 //#define STRUCT_POINT
+//#define DISTANCE_CHECK
+#define CONSRUCTOR_CHECH
+
 
 void main()
 {
@@ -109,17 +122,36 @@ void main()
 
 
 	cout << "Расстояние от точки А до точки Б:" << A.distance(B) << endl; // вызываем от точки А до точки Б, или наоборот 
+	cout << delimiter << endl; 
 	cout << "Расстояние от точки Б до точки А:" << B.distance(A) << endl; // вызываем от точки А до точки Б, или наоборот 
+	cout << delimiter << endl;
 	cout << "Расстояние от точки А до точки Б:" << distance(A, B) << endl; // вызываем от точки А до точки Б, или наоборот 
-	cout << "Расстояние от точки Б до точки А:" << distance(B, A) << endl; // вызываем от точки А до точки Б, или наоборот   
+	cout << delimiter << endl;
+	cout << "Расстояние от точки Б до точки А:" << distance(B, A) << endl; // вызываем от точки А до точки Б, или наоборот 
+	cout << delimiter << endl;
+
 #endif // DISTANCE_CHECK
 
+#ifdef CONSRUCTOR_CHECH
 	Point A;		// Default conctructor, чтобы создать объект нужен конструктор  
 	A.print();
 
 	Point B = 5;
 	B.print();
 
-	Point C(2,3);
-	C.print(); 
+	Point C(2, 3);
+	C.print();
+
+	Point D = C;			// Copy Constructor
+	D.print();
+
+
+	Point E;
+	E = D;
+	E.print();
+
+#endif // CONSRUCTOR_CHECH
+
+
+
 }
