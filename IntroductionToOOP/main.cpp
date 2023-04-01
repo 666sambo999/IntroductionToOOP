@@ -1,9 +1,12 @@
-#include <iostream>
+п»ї#include <iostream>
 
 using namespace std;
+using std::cout; 
+ 
 
+//#define DISTANCE_CHECK
 
-class Point // создаем структуру или класс новый 
+class Point // СЃРѕР·РґР°РµРј СЃС‚СЂСѓРєС‚СѓСЂСѓ РёР»Рё РєР»Р°СЃСЃ РЅРѕРІС‹Р№ 
 {
 	double x;
 	double y;
@@ -24,18 +27,46 @@ public:
 	{
 		this ->y = y;
 	}
-	// Метод (Methods)
+	//   Constructor 
+	//Point()			 // РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹Р·РІР°РЅ Р±РµР· РїР°СЂР°РјРµС‚РѕСЂРѕРІ 
+	//{
+	//	x = y = 0;
+	//	cout << "Constructor:\t" << this << endl; 
+	//}
+	//Point(double x)			// РµСЃС‚СЊ РїР°СЂР°РјРµС‚СЂ, РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹Р·РІР°РЅ 
+	//{
+	//	this -> x = x; 
+	//	y = 0; 
+	//	cout << "1ArgConstructor:\t" << this << endl; 
+	//}
+	Point(double x = 0, double y = 0) //  С‚Р°РєР¶Рµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹Р·РІР°РЅ Р±РµР· РїР°СЂР°РјРµС‚СЂРѕРІ  
+	{
+		this->x = x;
+		this->y = y;
+		cout << "Constructor:\t" << this << endl; 
+	}
+
+	~Point()
+	{
+		cout << "Destructor:\t" << this << endl; 
+	}
+
+	// РњРµС‚РѕРґ (Methods)
 	double distance(Point other)
 	{
-		// this - это точка от которой мы считаем расстояние
-		// other - это вторая точка, (указанная точка)
+		// this - СЌС‚Рѕ С‚РѕС‡РєР° РѕС‚ РєРѕС‚РѕСЂРѕР№ РјС‹ СЃС‡РёС‚Р°РµРј СЂР°СЃСЃС‚РѕСЏРЅРёРµ
+		// other - СЌС‚Рѕ РІС‚РѕСЂР°СЏ С‚РѕС‡РєР°, (СѓРєР°Р·Р°РЅРЅР°СЏ С‚РѕС‡РєР°)
 		double x_distance = this->x - other.x; 
 		double y_distance = this->y - other.y;
 		double distance = sqrt(x_distance * x_distance + y_distance * y_distance);
-		return distance; // возвращаем значение 
+		return distance; // РІРѕР·РІСЂР°С‰Р°РµРј Р·РЅР°С‡РµРЅРёРµ 
 	}
-
+	void print()
+	{
+	cout << "X = " << x << "\tY = " << y << endl; 
+	}
 };
+
 
 double distance(Point A, Point B)
 {
@@ -51,11 +82,11 @@ void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef STRUCT_POINT
-	// Members - члены 
-	int a; // объявление переменной "а" типа int 
-	Point A; // объявление переменной "А" типа Point 
-	// объявление объекта А типа Point 
-	// создание экземпляра А структуры 
+	// Members - С‡Р»РµРЅС‹ 
+	int a; // РѕР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ "Р°" С‚РёРїР° int 
+	Point A; // РѕР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ "Рђ" С‚РёРїР° Point 
+	// РѕР±СЉСЏРІР»РµРЅРёРµ РѕР±СЉРµРєС‚Р° Рђ С‚РёРїР° Point 
+	// СЃРѕР·РґР°РЅРёРµ СЌРєР·РµРјРїР»СЏСЂР° Рђ СЃС‚СЂСѓРєС‚СѓСЂС‹ 
 	A.x = 2;
 	A.y = 3;
 	cout << A.x << "\t" << A.y << endl;
@@ -63,19 +94,32 @@ void main()
 	cout << pA->x << "\t" << pA->y << endl;
 #endif // STRUCT_POINT
 
-	Point A; 
+#ifdef DISTANCE_CHECK
+	Point A;
 	A.set_x(2);
 	A.set_y(3);
-	cout << A.get_x() << "\t" << A.get_y () << endl; 
+	//cout << A.get_x() << "\t" << A.get_y () << endl;
+	A.print();
 
 	Point B;
 	B.set_x(7);
-	B.set_y(8); 
-	cout << B.get_x() << "\t" << B.get_y() << endl; 
+	B.set_y(8);
+	//cout << B.get_x() << "\t" << B.get_y() << endl; 
+	B.print();
 
-	cout << "Расстояние от точки А до точки Б:" << A.distance(B) << endl; // вызываем от точки А до точки Б, или наоборот 
-	cout << "Расстояние от точки Б до точки А:" << B.distance(A) << endl; // вызываем от точки А до точки Б, или наоборот 
-	cout << "Расстояние от точки А до точки Б:" << distance(A,B) << endl; // вызываем от точки А до точки Б, или наоборот 
-	cout << "Расстояние от точки Б до точки А:" << distance(B,A) << endl; // вызываем от точки А до точки Б, или наоборот 
 
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘:" << A.distance(B) << endl; // РІС‹Р·С‹РІР°РµРј РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘, РёР»Рё РЅР°РѕР±РѕСЂРѕС‚ 
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё Р‘ РґРѕ С‚РѕС‡РєРё Рђ:" << B.distance(A) << endl; // РІС‹Р·С‹РІР°РµРј РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘, РёР»Рё РЅР°РѕР±РѕСЂРѕС‚ 
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘:" << distance(A, B) << endl; // РІС‹Р·С‹РІР°РµРј РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘, РёР»Рё РЅР°РѕР±РѕСЂРѕС‚ 
+	cout << "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РѕС‚ С‚РѕС‡РєРё Р‘ РґРѕ С‚РѕС‡РєРё Рђ:" << distance(B, A) << endl; // РІС‹Р·С‹РІР°РµРј РѕС‚ С‚РѕС‡РєРё Рђ РґРѕ С‚РѕС‡РєРё Р‘, РёР»Рё РЅР°РѕР±РѕСЂРѕС‚   
+#endif // DISTANCE_CHECK
+
+	Point A;		// Default conctructor, С‡С‚РѕР±С‹ СЃРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚ РЅСѓР¶РµРЅ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ  
+	A.print();
+
+	Point B = 5;
+	B.print();
+
+	Point C(2,3);
+	C.print(); 
 }
