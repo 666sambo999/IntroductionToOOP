@@ -55,11 +55,12 @@ public:
 		cout << "Destructor:\t" << this << endl; 
 	}
 	//				Operator:
-	void operator = (const Point& other)
+	Point& operator = (const Point& other)
 	{
 		this->x = x;
 		this->y = y;
 		cout << "CopyAssigment\t" << this << endl; 
+		return *this; 
 	}
 	// Метод (Methods)
 	double distance(const Point& other)
@@ -88,8 +89,8 @@ double distance(const Point& A, const Point& B)
 
 //#define STRUCT_POINT
 //#define DISTANCE_CHECK
-#define CONSRUCTOR_CHECH
-
+//#define CONSRUCTOR_CHECH
+#define ASSIGMENT_OPERATOR
 
 void main()
 {
@@ -152,6 +153,20 @@ void main()
 
 #endif // CONSRUCTOR_CHECH
 
+#ifdef ASSIGMENT_OPERATOR
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << endl;
+
+
+	Point A, B, C;
+	cout << delimiter << endl;
+	A = B = C = Point(2, 3); // каждый оператор это функция, оператор возвращает значение, которое он записал в переменную 
+	cout << delimiter << endl;
+	A.print();
+	B.print();
+	C.print();
+#endif // ASSIGMENT_OPERATOR
 
 
 }
