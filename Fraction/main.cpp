@@ -95,6 +95,8 @@ public:
 	{
 		integer += numenator /denominator;
 		numenator %= denominator;
+		if (numenator > 0) numenator;
+		else if (numenator < 0)numenator = -numenator; 
 		return *this;
 	}
 	// לועמה טםגונעמנ מבנאשאוע הנמבü
@@ -218,7 +220,7 @@ void main()
 	Fraction E = A + B;
 	E.print(); 
 
-	Fraction G = B-A;
+	Fraction G = A-B;
 	G.print();
 
 }
