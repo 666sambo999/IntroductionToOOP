@@ -1,20 +1,19 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-
 using namespace std;
 using std::cout;
 
-class Fraction; // объ€вление функции 
+class Fraction;				// объ€вление функции 
 Fraction operator*(Fraction left, Fraction right); 
 Fraction operator/(const Fraction& left, const Fraction& right);
 Fraction operator+(Fraction left, Fraction right);
 Fraction operator-(Fraction left, Fraction right);
 
-
 class Fraction
 {
-	int integer;		// целое число 
-	int numerator;		// числитель 
-	int denominator;	// знаменатель 
+	int integer;			// целое число 
+	int numerator;			// числитель 
+	int denominator;		// знаменатель 
 public:
 	int get_integer() const
 	{
@@ -41,7 +40,7 @@ public:
 		if (denominator == 0) denominator = 1;
 		this->denominator = denominator;
 	}
-			// конструктор 
+				// конструктор 
 	Fraction()		
 	{
 		this->integer = 0;
@@ -63,25 +62,25 @@ public:
 		set_denominator(denominator);
 		cout << "Constructor:\t\t" << this << endl;
 	}
-	Fraction(int integer, int numenator, int denominator)
+	Fraction(int integer, int numerator, int denominator)
 	{
 		this->integer = integer;
 		this->numerator = numerator;
-		this->denominator = denominator;
-		cout << "Constructor:\t" << endl; 
+		this->set_denominator(denominator);
+		cout << "Constructor:\t\t" << this << endl;
 	}
 	Fraction(const Fraction& other)
 	{
 		this->integer = other.integer;
 		this->numerator = other.numerator;
 		this->denominator = other.denominator;
-		cout << "CopyConstructor:\t" << endl;
+		cout << "CopyConstructor:\t" << this << endl;
 	}
 	~Fraction()
 	{
 		cout << "Destructor:\t\t" << this << endl;
 	}
-			// Operator
+				// Operator
 	Fraction& operator=(const Fraction& other)
 	{
 		this->integer = other.integer;
@@ -90,8 +89,7 @@ public:
 		cout << "CopyAssigment:\t\t" << this << endl; 
 		return *this; 
 	}
-	
-	// Increment/Decrement 
+			// Increment/Decrement 
 	Fraction& operator++ ()		// инкремент добавл€ет только к целым част€м, к дробной нет, увеличивает на 1
 	{
 		integer++; 
@@ -109,8 +107,7 @@ public:
 		integer--;
 		return old;
 	}
-
-			// Meтоды 
+				// Meтоды 
 	Fraction& to_improper() 
 	{
 		numerator += integer * denominator;
@@ -121,11 +118,11 @@ public:
 	{
 		integer += numerator /denominator;
 		numerator %= denominator;
-		/*if (numerator > 0) numerator;
-		else if (numerator < 0)numerator = -numerator;*/
+		if (numerator > 0) numerator;
+		else if (numerator < 0)numerator = -numerator;
 		return *this;
 	}
-	// метод инвертор обращает дробь
+			// метод инвертор обращает дробь
 	Fraction inverted()const
 	{
 		Fraction inverted = *this; 
@@ -135,7 +132,7 @@ public:
 		inverted.numerator ^= inverted.denominator;
 		return inverted;
 	}
-	Fraction& reduce() // неконстантный метод, тк измен€ет значени€ 
+	Fraction& reduce()	// неконстантный метод, тк измен€ет значени€ 
 	{
 		to_proper(); 
 		int more, less, rest; 
@@ -147,7 +144,7 @@ public:
 			more = less;
 			less = rest;
 		} while (rest); 
-		int GCD = more; // GCD - Greatest Common Divisor; 
+		int GCD = more;		// GCD - Greatest Common Divisor; 
 		numerator /= GCD;
 		denominator /= GCD; 
 		return *this; 
@@ -164,7 +161,7 @@ public:
 		else if (integer == 0)cout << 0;
 		cout << endl; 
 	}
-	Fraction& operator *=(const Fraction& other) // перегруженный оператор - функци€: и прежде чем использовать ее нужно объ€вить 
+	Fraction& operator *=(const Fraction& other)	// перегруженный оператор - функци€: и прежде чем использовать ее нужно объ€вить 
 	{
 		return *this = *this * other; 
 	}
@@ -180,10 +177,9 @@ public:
 	{
 		return *this = *this - other;
 	}
-
 };
-Fraction operator*(Fraction left, Fraction right) // по const ссылке потому что не должен измен€ть значени€, и не создавались новые объекты в классе
-{												//  константный метод только дл€ константного объекта, передать по значению,
+Fraction operator*(Fraction left, Fraction right)	// по const ссылке потому что не должен измен€ть значени€, и не создавались новые объекты в классе
+{													//  константный метод только дл€ константного объекта, передать по значению,
 	left.to_improper();
 	right.to_improper();
 	/*product.set_numenator(left.get_nunenator() * right.get_nunenator());
@@ -200,7 +196,6 @@ Fraction operator*(Fraction left, Fraction right) // по const ссылке потому что 
 		left.get_numerator() * right.get_numerator(),
 		left.get_denominator() * right.get_denominator()
 	).to_proper(). reduce();
-
 }
 Fraction operator/(const Fraction& left, const Fraction& right)
 {
@@ -212,7 +207,6 @@ Fraction operator/(const Fraction& left, const Fraction& right)
 		left.get_denominator() * right.get_nunenator()
 	);*/
 	return left * right.inverted();
-
 }
 Fraction operator+(Fraction left, Fraction right)
 {
@@ -243,7 +237,6 @@ bool operator == (Fraction left, Fraction right)
 		return true;
 	else
 		return false;*/
-
 }
 bool operator != (Fraction left, Fraction right)
 {
@@ -261,7 +254,7 @@ bool operator < (Fraction left, Fraction right)
 	right.to_improper();
 	return left.get_numerator() * right.get_denominator() < right.get_numerator() * left.get_denominator();
 }
-bool operator >= (Fraction left, Fraction right) // 
+bool operator >= (Fraction left, Fraction right)  
 {
 	return !(left < right);
 	//return left > right || left == right; 
@@ -278,14 +271,43 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	{
 		if (obj.get_integer())os << "(";
 		os << obj.get_numerator() << "/" << obj.get_denominator();
-		if (obj.get_integer()) os << ")";
+		if (obj.get_integer())os << ")";
 	}
 	else if (obj.get_integer() == 0)os << 0;
-	return os; 
+	return os;
+}
+std::istream& operator>>(std::istream& is, Fraction& obj)
+{
+	const int SIZE = 256; 
+	char buffer[SIZE] = {};		// строку сохран€ем в буфер 
+	//is >> buffer; 
+	is.getline(buffer, SIZE);
+	int number[3] = {};		// здесь хран€тьс€ числа, введенный с клавиатуры 
+	int n = 0;				//  счетчик чисел. посчитать сколько ввели чисел 
+	const char delimiters[] = "( /)"; // дл€ функции strtok
+	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))// вытаскиваем “окены - полезна€ инфа
+	{
+		// указатель pch хранит адрес начала токена
+		// в функцию strtok() только первыйраз передаетс€ делима€ строка
+		// при всех последующих вызовах на место делимой строки нужно передавать NULL
+		// это показывает функции strtok(), что она работает с ранее переданной строкой 
+		// если делимую строку передать еще раз, то strtok() начет обрабатывать сначала 
+		number[n++] = atoi(pch);
+		// atoi - ASCII - string To Integer (функци€ преобразует строку в значение типа int)
+	}
+	//for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl; 
+	obj = Fraction(); 
+	switch (n)
+	{
+	case 1: obj.set_integer(number[0]); break;
+	case 2: obj.set_numerator(number[0]); obj.set_denominator(number[1]); break; 
+	case 3: obj.set_integer(number[0]); obj.set_numerator(number[1]); obj.set_denominator(number[2]); break;
+	}
+	return is; 
 }
 
-//#define CONSRUCTOR_CHECK
-//# define ARIFMETIKA
+	//#define CONSRUCTOR_CHECK
+	//# define ARIFMETIKA
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -308,7 +330,7 @@ void main()
 
 	A = E;
 	A.print();
-#endif // CONSRUCTOR_CHECK
+#endif	// CONSRUCTOR_CHECK
 
 #ifdef ARIFMETIKA
 	Fraction A(2, 3, 4);
@@ -353,7 +375,7 @@ void main()
 	{
 		i.print();
 	}
-#endif // ARIFMETIKA
+#endif	// ARIFMETIKA
 
 	/*cout << (Fraction(1, 2) == Fraction(5, 11)) << endl; 
 	cout << (Fraction(1, 2) != Fraction(5, 10)) << endl; 
@@ -362,10 +384,10 @@ void main()
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 	cout << (Fraction(1, 2) <= Fraction(5, 10)) << endl;*/
 
-	Fraction A(2,4,5); 
+	Fraction A (123,32,45); 
+	cout << "¬ведите простую дробь: "; cin >> A; 
+		// 5, 1/2, 5 1/2, могут быть любые дроби 
 	cout << A << endl; 
-
-
 
 
 }
