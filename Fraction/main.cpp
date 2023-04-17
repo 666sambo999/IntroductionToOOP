@@ -55,6 +55,16 @@ public:
 		this->denominator = 1;
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;
+		integer = decimal;
+		decimal -= integer; 
+		denominator = 1e+9;
+		numerator = decimal * denominator; 
+		reduce();
+		cout << "1DargConstructor\t" << this << endl; 
+	}
 	Fraction(int numerator,int denominator)
 	{
 		this->integer = 0;
@@ -420,8 +430,8 @@ void main()
 	double b = A;
 	cout << b << endl; */
 
-	Fraction A = (Fraction)2.75;
-	
+	Fraction A = 2.75;
 	cout << A << endl; 
-
+	Fraction B = 2.76;
+	cout << B << endl;
 }
