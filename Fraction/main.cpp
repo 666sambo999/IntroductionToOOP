@@ -48,7 +48,7 @@ public:
 		this->denominator = 1;
 		cout << "DefaultConstructor:\t" << this << endl; 
 	}
-	Fraction(int integer)
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
@@ -107,7 +107,18 @@ public:
 		integer--;
 		return old;
 	}
-				// Meтоды 
+			// Type-cast operators:
+	explicit operator int()
+	{
+		return integer; 
+	}
+	operator double()
+	{
+		
+		return integer + (double)numerator/denominator;
+	}
+	
+	// Meтоды 
 	Fraction& to_improper() 
 	{
 		numerator += integer * denominator;
@@ -308,6 +319,8 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 
 	//#define CONSRUCTOR_CHECK
 	//# define ARIFMETIKA
+	//#define CONVERSION
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -384,10 +397,31 @@ void main()
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 	cout << (Fraction(1, 2) <= Fraction(5, 10)) << endl;*/
 
-	Fraction A (123,32,45); 
-	cout << "Введите простую дробь: "; cin >> A; 
-		// 5, 1/2, 5 1/2, могут быть любые дроби 
+	//Fraction A (123,32,45); 
+	//cout << "Введите простую дробь: "; cin >> A; 
+	//	// 5, 1/2, 5 1/2, могут быть любые дроби 
+	//cout << A << endl; 
+
+			// Преобразование типов 
+#ifdef CONVERSION
+	Fraction A = (Fraction)5;  // Conversion from other to Class produced коструктором с одним параметром
+	cout << A << endl;
+	Fraction B; // конструктор по умолчанию.  
+	B = Fraction(8);    //Conversion from other to Class produced оператор присваивания
+	cout << B << endl;
+#endif // CONVERSION
+
+	/*Fraction A(2, 3, 4); 
 	cout << A << endl; 
 
+	int a = (int)A; 
+	cout << a << endl; 
+
+	double b = A;
+	cout << b << endl; */
+
+	Fraction A = (Fraction)2.75;
+	
+	cout << A << endl; 
 
 }
