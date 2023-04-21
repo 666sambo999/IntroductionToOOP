@@ -1,6 +1,10 @@
 ﻿#include <iostream>
 
 using namespace std;
+#define delimeter "\n--------------------------------------------"
+class String;
+String operator +(const String& left, const String& right);
+
 
 class String
 {
@@ -79,6 +83,10 @@ public:
 		other.str = nullptr;
 		cout << "MoveAssignment:\t\t" << this << endl; 
 	}
+	String& operator +=(const String& other)
+	{
+		return *this = *this + other;
+	}
 	const char& operator [](char i)const
 	{
 		return str[i];
@@ -107,12 +115,21 @@ String operator +(const String& left, const String& right)
 }
 std::ostream& operator<<(std::ostream& os, const String& obj)
 {
+	// os = Output stream
 	return os << obj.get_str();
 }
-
+std::istream& operator >>(std::istream& is, String& obj)// не может быть константным так как изменяет значения 
+{
+	const int SIZE = 102400; 
+	char buffer[SIZE]{};
+	is >> buffer; 
+	obj = buffer; 
+	return is;	
+	//return is >> obj.get_str();
+}
 
 //#define CONSTRUCTOR_CHECK
-#define HOME_WORK
+//#define HOME_WORK
 
 void main()
 {
@@ -142,6 +159,7 @@ void main()
 	String str1 = "Hello";
 	String str2 = "World";
 	str1 += str2;
+	cout << delimeter << endl; 
 	cout << str1 << endl; 
 	//String str3 = str1 + " "+ str2; // Move contructor
 	//String str3;
@@ -149,7 +167,9 @@ void main()
 	//cout << str1 << "+" << str2 << "=" << str3 << endl;
 #endif // HOME_WORK
 
-
+	String str; 
+	cout << "Введите строку: "; cin >> str; 
+	cout << str << endl;
 
 
 }
