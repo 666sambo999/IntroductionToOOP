@@ -1,11 +1,11 @@
-#include <iostream>
+ï»¿#include <iostream>
 
 using namespace std;
 
 class String
 {
-	int size;		// ðàçìåð ñòðîêè â áàéòàõ 	
-	char* str;		// Àäðåñ ñòðîêè â äèíàìè÷åñêîé ïàìÿòè 
+	int size;		// Ñ€Ð°Ð·Ð¼ÐµÑ€ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð² Ð±Ð°Ð¹Ñ‚Ð°Ñ… 	
+	char* str;		// ÐÐ´Ñ€ÐµÑ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð² Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡ÐµÑÐºÐ¾Ð¹ Ð¿Ð°Ð¼ÑÑ‚Ð¸ 
 public: 
 	int get_size()const
 	{
@@ -27,14 +27,14 @@ public:
 	}
 	String(const char* str)
 	{
-		this->size = strlen(str)+1; // îïðåäåëÿåì ðàçìåð ñòðîêè 
+		this->size = strlen(str)+1; // Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÑÑ‚Ñ€Ð¾ÐºÐ¸ 
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl; 
 	}
 	String(const String& other)
 	{
-		// Deep copy (ïîáèòîîå êîïèðîâàíèå)
+		// Deep copy (Ð¿Ð¾Ð±Ð¸Ñ‚Ð¾Ð¾Ðµ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ)
 		this->size = other.size;
 		this->str = new char [size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
@@ -42,7 +42,7 @@ public:
 	}
 	String(String&& other)
 	{
-		// Shallow copy (ïîâåðõíîñòíîå êîïèðîâàíèå)
+		// Shallow copy (Ð¿Ð¾Ð²ÐµÑ€Ñ…Ð½Ð¾ÑÑ‚Ð½Ð¾Ðµ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ)
 		this->size = other.size;
 		this->str = other.str;
 		other.size = 0;
@@ -58,11 +58,11 @@ public:
 	// Operators
 	String& operator=(const String& other) // Deep copy 
 	{
-		// Ïðîâåðÿåì,íå ÿâëÿåòñÿ ëè ïðèíÿòûé ïàðàìåòð íàøèì îáúåêòîì 
+		// ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼,Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð»Ð¸ Ð¿Ñ€Ð¸Ð½ÑÑ‚Ñ‹Ð¹ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ Ð½Ð°ÑˆÐ¸Ð¼ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð¼ 
 		if (this == &other)return *this; 
-		//1)óäàëÿåì ñòàðóþ ñòðîêó 
+		//1)ÑƒÐ´Ð°Ð»ÑÐµÐ¼ ÑÑ‚Ð°Ñ€ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ 
 		delete[]this->str; 
-		//2) Âûïîëíÿåì ïîáèòîâóþ îïåðàöèþ êîïèðîâàíèÿ 
+		//2) Ð’Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÐ¼ Ð¿Ð¾Ð±Ð¸Ñ‚Ð¾Ð²ÑƒÑŽ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑŽ ÐºÐ¾Ð¿Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ 
 		this->size = other.size;
 		this->str = new char [size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
@@ -97,10 +97,10 @@ public:
 String operator +(const String& left, const String& right)
 {
 	String cat(left.get_size() + right.get_size() - 1);
-	for (int i = 0; i < left.get_size(); i++)// ïåðâàÿ ñòðîêà
+	for (int i = 0; i < left.get_size(); i++)// Ð¿ÐµÑ€Ð²Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°
 		cat[i] = left[i];
 		//cat.get_str()[i] = left.get_str()[i];
-	for (int i = 0; i < right.get_size(); i++) // âòîðàÿ ñòðîêà
+	for (int i = 0; i < right.get_size(); i++) // Ð²Ñ‚Ð¾Ñ€Ð°Ñ ÑÑ‚Ñ€Ð¾ÐºÐ°
 		cat[i+left.get_size()-1] = right[i];
 		//cat.get_str()[i+left.get_size()-1] = right.get_str()[i];
 	return cat; 
@@ -121,10 +121,10 @@ void main()
 	String str1;		// Default constructor
 	str1.print();
 
-	//String str2 = 16; // Êîíñòðóêòîð ñ îäíèì ïàðàìåòðîì Single-argumen 
+	//String str2 = 16; // ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ñ Ð¾Ð´Ð½Ð¸Ð¼ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð¼ Single-argumen 
 	String str2(16);
-	str2.print(); // explicit êîíñòðóêòîð íåâîçìîæíî âûçâàòü îïåðàòîðîì ïðèñâîèòü
-	// åãî ìîæíî âûõâàòü òîëüêî òàê
+	str2.print(); // explicit ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€ Ð½ÐµÐ²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ñ‹Ð·Ð²Ð°Ñ‚ÑŒ Ð¾Ð¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€Ð¾Ð¼ Ð¿Ñ€Ð¸ÑÐ²Ð¾Ð¸Ñ‚ÑŒ
+	// ÐµÐ³Ð¾ Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ñ‹Ñ…Ð²Ð°Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ‚Ð°Ðº
 
 	String str3 = "Hello";
 	str3 = str3; 
@@ -132,9 +132,9 @@ void main()
 
 	//String str4 = str3; //Copy constructor
 	String str4; //Copy constructor
-	str4 = str3; // îïåðàòîð ïðèñâàèâàíèÿ 
+	str4 = str3; // Ð¾Ð¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€ Ð¿Ñ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ñ 
 	
-	str4.print();// îøèáêà Debug êîãäà óäàëÿåòüñÿ äâà ðàçà îäíà è òàæå ïàìÿòü
+	str4.print();// Ð¾ÑˆÐ¸Ð±ÐºÐ° Debug ÐºÐ¾Ð³Ð´Ð° ÑƒÐ´Ð°Ð»ÑÐµÑ‚ÑŒÑÑ Ð´Ð²Ð° Ñ€Ð°Ð·Ð° Ð¾Ð´Ð½Ð° Ð¸ Ñ‚Ð°Ð¶Ðµ Ð¿Ð°Ð¼ÑÑ‚ÑŒ
 
 #endif // CONSTRUCTOR_CHECK
 	
