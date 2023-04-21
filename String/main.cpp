@@ -34,23 +34,29 @@ public:
 	}
 	String(const String& other)
 	{
+		// Deep copy (побитоое копирование)
 		this->size = other.size;
 		this->str = new char [size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << endl;
+		cout << "CopyConstructor:\t" << this << endl;
+	}
+	String(String&& other)
+	{
+		// Shallow copy (поверхностное копирование)
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveConstructor:\t" << this << endl;
 	}
 	~String()
 	{
 		delete[]this->str;
-		cout << "Destructor:\t" << endl; 
+		cout << "Destructor:\t\t" << this << endl; 
 	}
-	/*std::ostream& operator<<(std::ostream& os, const String& obj)
-	{
-		return os;
-	}*/
-
+	
 	// Operators
-	String& operator=(const String& other)
+	String& operator=(const String& other) // Deep copy 
 	{
 		// ѕровер€ем,не €вл€етс€ ли прин€тый параметр нашим объектом 
 		if (this == &other)return *this; 
@@ -60,26 +66,43 @@ public:
 		this->size = other.size;
 		this->str = new char [size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyAssigment:\t" << endl;
+		cout << "CopyAssigment:\t" << this << endl;
 		return *this; 
 	}
-
+	String& operator =(String&& other)
+	{
+		if (this == &other)return *this; 
+		delete[]this->str;
+		this->size = other.size;
+		this->str = other.str;
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t\t" << this << endl; 
+	}
+	const char& operator [](char i)const
+	{
+		return str[i];
+	}
+	char& operator [](char i)
+	{
+		return str[i];
+	}
 	// Metods 
 	void print()const
 	{
 		cout << "Size\t" << size << endl; 
 		cout << "Str\t" << str << endl; 
 	}
-
-
 };
 String operator +(const String& left, const String& right)
 {
 	String cat(left.get_size() + right.get_size() - 1);
-	for (int i = 0; i < left.get_size(); i++)
-		cat.get_str()[i] = left.get_str()[i];
-	for (int i = 0; i < right.get_size(); i++)
-		cat.get_str()[i+left.get_size()-1] = right.get_str()[i];
+	for (int i = 0; i < left.get_size(); i++)// перва€ строка
+		cat[i] = left[i];
+		//cat.get_str()[i] = left.get_str()[i];
+	for (int i = 0; i < right.get_size(); i++) // втора€ строка
+		cat[i+left.get_size()-1] = right[i];
+		//cat.get_str()[i+left.get_size()-1] = right.get_str()[i];
 	return cat; 
 }
 std::ostream& operator<<(std::ostream& os, const String& obj)
@@ -87,8 +110,10 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 	return os << obj.get_str();
 }
 
+
 //#define CONSTRUCTOR_CHECK
 #define HOME_WORK
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -116,8 +141,12 @@ void main()
 #ifdef HOME_WORK
 	String str1 = "Hello";
 	String str2 = "World";
-	String str3 = str1 + str2;
-	cout << str1 << "+" << str2 << "=" << str3 << endl;
+	str1 += str2;
+	cout << str1 << endl; 
+	//String str3 = str1 + " "+ str2; // Move contructor
+	//String str3;
+	//str3 = str1 + str2; // move assignment 
+	//cout << str1 << "+" << str2 << "=" << str3 << endl;
 #endif // HOME_WORK
 
 
