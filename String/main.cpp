@@ -11,98 +11,107 @@ class String
 	int size;		// размер строки в байтах 	
 	char* str;		// Адрес строки в динамической памяти 
 public: 
-	int get_size()const
-	{
-		return size;
-	}
-	const char* get_str()const
-	{
-		return str;
-	}
-	 char* get_str()
-	{
-		return str;
-	}
+	int get_size()const;
+	const char* get_str()const;
+	char* get_str();
 	 // данную операцию можно делать в конструкторах
-	explicit String(int size=256):size(size),str(new char[size]{})
-	{
-		//this->size = size;
-		//this->str = new char[size] {};
-		cout << "Default1ArgConstructor:\t" << this << endl; 
-	}
-	String(const char* str):String(strlen(str)+1) // делегируем выделение памяти  констр по умолчанию
-	{
-		//this->size = strlen(str)+1; // определяем размер строки 
-		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++)this->str[i] = str[i];
-		cout << "Constructor:\t\t" << this << endl; 
-	}
-	String(const String& other):String(other.str)
-	{
-		// Deep copy (побитовое копирование)
-		/*this->size = other.size;
-		this->str = new char [size] {};*/
-		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << this << endl;
-	}
-	String(String&& other) :size(other.size), str(other.str)
-	{
-		// Shallow copy (поверхностное копирование)
-		/*this->size = other.size;
-		this->str = other.str;*/
-		other.size = 0;
-		other.str = nullptr;
-		cout << "MoveConstructor:\t" << this << endl;
-	}
-	~String()
-	{
-		delete[]this->str;
-		cout << "Destructor:\t\t" << this << endl; 
-	}
+	explicit String(int size = 256);
+	String(const char* str);
+	String(const String& other);
+	String(String&& other);
+	~String();
 	
 	// Operators
-	String& operator=(const String& other) // Deep copy 
-	{
-		// Проверяем,не является ли принятый параметр нашим объектом 
-		if (this == &other)return *this; 
-		//1)удаляем старую строку 
-		delete[]this->str; 
-		//2) Выполняем побитовую операцию копирования 
-		this->size = other.size;
-		this->str = new char [size] {};
-		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
-		cout << "CopyAssigment:\t" << this << endl;
-		return *this; 
-	}
-	String& operator =(String&& other)
-	{
-		if (this == &other)return *this; 
-		delete[]this->str;
-		this->size = other.size;
-		this->str = other.str;
-		other.size = 0;
-		other.str = nullptr;
-		cout << "MoveAssignment:\t\t" << this << endl; 
-	}
-	String& operator +=(const String& other)
-	{
-		return *this = *this + other;
-	}
-	const char& operator [](char i)const
-	{
-		return str[i];
-	}
-	char& operator [](char i)
-	{
-		return str[i];
-	}
+	String& operator=(const String& other);
+	String& operator =(String&& other);
+	String& operator +=(const String& other);
+	const char& operator [](char i)const;
+	char& operator [](char i);
 	// Metods 
-	void print()const
-	{
-		cout << "Size\t" << size << endl; 
-		cout << "Str\t" << str << endl; 
-	}
+	void print()const;
 };
+// :: - оператор разрешения видимости 
+int String::get_size()const
+{
+	return size;
+}
+const char* String::get_str()const
+{
+	return str;
+}
+char* String::get_str()
+{
+	return str;
+}
+// данную операцию можно делать в конструкторах
+String::String(int size) :size(size), str(new char[size] {})
+{
+	cout << "Default1ArgConstructor:\t" << this << endl;
+}
+String::String(const char* str) :String(strlen(str) + 1) // делегируем выделение памяти  констр по умолчанию
+{
+	for (int i = 0; i < size; i++)this->str[i] = str[i];
+	cout << "Constructor:\t\t" << this << endl;
+}
+String::String(const String& other) :String(other.str)
+{
+	cout << "CopyConstructor:\t" << this << endl;
+}
+String::String(String&& other) :size(other.size), str(other.str)
+{
+	other.size = 0;
+	other.str = nullptr;
+	cout << "MoveConstructor:\t" << this << endl;
+}
+String::~String()
+{
+	delete[]this->str;
+	cout << "Destructor:\t\t" << this << endl;
+}
+
+// Operators
+// это ф-я, состоит  type	name
+String& String::operator=(const String& other) // Deep copy 
+{
+	// Проверяем,не является ли принятый параметр нашим объектом 
+	if (this == &other)return *this;
+	//1)удаляем старую строку 
+	delete[]this->str;
+	//2) Выполняем побитовую операцию копирования 
+	this->size = other.size;
+	this->str = new char [size] {};
+	for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+	cout << "CopyAssigment:\t" << this << endl;
+	return *this;
+}
+String& String::operator =(String&& other)
+{
+	if (this == &other)return *this;
+	delete[]this->str;
+	this->size = other.size;
+	this->str = other.str;
+	other.size = 0;
+	other.str = nullptr;
+	cout << "MoveAssignment:\t\t" << this << endl;
+}
+String& String::operator +=(const String& other)
+{
+	return *this = *this + other;
+}
+const char& String::operator [](char i)const
+{
+	return str[i];
+}
+char& String::operator [](char i)
+{
+	return str[i];
+}
+// Metods 
+void String::print()const
+{
+	cout << "Size\t" << size << endl;
+	cout << "Str\t" << str << endl;
+}
 String operator +(const String& left, const String& right)
 {
 	String cat(left.get_size() + right.get_size() - 1);
