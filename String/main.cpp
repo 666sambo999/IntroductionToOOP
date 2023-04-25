@@ -23,32 +23,32 @@ public:
 	{
 		return str;
 	}
-	explicit String(int size=256)
+	explicit String(int size=256):size(size),str(new char[size]{})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "Default1ArgConstructor:\t" << this << endl; 
 	}
-	String(const char* str)
+	String(const char* str):size(strlen(str)+1),str(new char[size]{})
 	{
-		this->size = strlen(str)+1; // определяем размер строки 
-		this->str = new char[size] {};
+		//this->size = strlen(str)+1; // определяем размер строки 
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = str[i];
 		cout << "Constructor:\t\t" << this << endl; 
 	}
-	String(const String& other)
+	String(const String& other):size(other.size),str(new char [size] {})
 	{
 		// Deep copy (побитоое копирование)
-		this->size = other.size;
-		this->str = new char [size] {};
+		/*this->size = other.size;
+		this->str = new char [size] {};*/
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
-	String(String&& other)
+	String(String&& other) :size(other.size), str(other.str)
 	{
 		// Shallow copy (поверхностное копирование)
-		this->size = other.size;
-		this->str = other.str;
+		/*this->size = other.size;
+		this->str = other.str;*/
 		other.size = 0;
 		other.str = nullptr;
 		cout << "MoveConstructor:\t" << this << endl;
@@ -129,9 +129,9 @@ std::istream& operator >>(std::istream& is, String& obj)// не может бы�
 }
 
 //#define CONSTRUCTOR_CHECK
-//#define HOME_WORK
+#define HOME_WORK
 //#define IOSTREAM
-
+//#define CLASS_RABOTA
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -162,6 +162,10 @@ void main()
 	str1 += str2;
 	cout << delimeter << endl; 
 	cout << str1 << endl; 
+	cout << delimeter << endl; 
+
+	String str3 = str1;
+	str3.print();
 	//String str3 = str1 + " "+ str2; // Move contructor
 	//String str3;
 	//str3 = str1 + str2; // move assignment 
@@ -179,11 +183,12 @@ cout << str << endl;*/
 	cout << last_name << " " << first_name << endl;
 #endif // IOSTREAM
 
+#ifdef CLASS_RABOTA
 	String str1; //Default construtor
 	str1.print();
 	String str2(8); //Single-argument construtor of type int
 	str2.print();
-	String str3="Hello"; //Single-argument construtor of type const char
+	String str3 = "Hello"; //Single-argument construtor of type const char
 	str3.print();
 	String str4(); //Здесь не вызывается конструктор по умолчанию, в этой строке
 	// объявляется ф-я str4, которая ничего не принимает, и возвращает 
@@ -192,10 +197,12 @@ cout << str << endl;*/
 	String str5{};
 	str5.print();
 
-	String str6{1234};
+	String str6{ 1234 };
 	str6.print();
 
-	String str7{"Hello World"};
+	String str7{ "Hello World" };
 	str7.print();
+#endif // CLASS_RABOTA
+
 
 }
