@@ -130,6 +130,7 @@ std::istream& operator >>(std::istream& is, String& obj)// не может бы�
 
 //#define CONSTRUCTOR_CHECK
 //#define HOME_WORK
+//#define IOSTREAM
 
 void main()
 {
@@ -167,9 +168,34 @@ void main()
 	//cout << str1 << "+" << str2 << "=" << str3 << endl;
 #endif // HOME_WORK
 
-	String str; 
-	cout << "Введите строку: "; cin >> str; 
-	cout << str << endl;
+#ifdef IOSTREAM
+			/*String str;
+str.print();
+cout << "Введите строку: "; cin >> str;
+cout << str << endl;*/
+	String last_name;
+	String first_name;
+	cout << "Введите Ваше имя: "; cin >> last_name >> first_name;
+	cout << last_name << " " << first_name << endl;
+#endif // IOSTREAM
 
+	String str1; //Default construtor
+	str1.print();
+	String str2(8); //Single-argument construtor of type int
+	str2.print();
+	String str3="Hello"; //Single-argument construtor of type const char
+	str3.print();
+	String str4(); //Здесь не вызывается конструктор по умолчанию, в этой строке
+	// объявляется ф-я str4, которая ничего не принимает, и возвращает 
+	// значение типа String
+	//str4 This is not an object 
+	String str5{};
+	str5.print();
+
+	String str6{1234};
+	str6.print();
+
+	String str7{"Hello World"};
+	str7.print();
 
 }
